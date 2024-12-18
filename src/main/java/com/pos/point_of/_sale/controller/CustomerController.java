@@ -2,6 +2,7 @@ package com.pos.point_of._sale.controller;
 
 import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.request.CustomerSaveRequestDTO;
+import com.pos.point_of._sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.point_of._sale.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -29,5 +30,11 @@ public class CustomerController {
     public String saveCustomer(@RequestBody CustomerSaveRequestDTO customerSaveRequestDTO){
         String id =customerService.addCustomer(customerSaveRequestDTO);
         return id;
+    }
+
+    @PutMapping(path = "/update")
+    public String updateCustomer(@RequestBody CustomerUpdateRequestDTO customerUpdateRequestDTO){
+        String updated = customerService.updateCustomer(customerUpdateRequestDTO);
+        return updated;
     }
 }
