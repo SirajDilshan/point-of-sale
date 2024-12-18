@@ -1,41 +1,24 @@
-package com.pos.point_of._sale.dto;
-
-import jakarta.persistence.Column;
-import org.hibernate.annotations.JdbcTypeCode;
-import org.hibernate.type.SqlTypes;
+package com.pos.point_of._sale.dto.request;
 
 import java.util.ArrayList;
 
-public class CustomerDTO {
+public class CustomerSaveRequestDTO {
 
-    private int customerId;
     private String customerName;
     private String customerAddress;
     private double customerSalary;
     private ArrayList<String> contactNumbers;
     private String nic;
-    private boolean activeState;
 
-    public CustomerDTO() {
-
+    public CustomerSaveRequestDTO() {
     }
 
-    public CustomerDTO(int customerId, String customerName, String customerAddress, double customerSalary, ArrayList<String> contactNumbers, String nic, boolean activeState) {
-        this.customerId = customerId;
+    public CustomerSaveRequestDTO(String customerName, String customerAddress, double customerSalary, ArrayList<String> contactNumbers, String nic) {
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerSalary = customerSalary;
         this.contactNumbers = contactNumbers;
         this.nic = nic;
-        this.activeState = activeState;
-    }
-
-    public int getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(int customerId) {
-        this.customerId = customerId;
     }
 
     public String getCustomerName() {
@@ -78,24 +61,14 @@ public class CustomerDTO {
         this.nic = nic;
     }
 
-    public boolean isActiveState() {
-        return activeState;
-    }
-
-    public void setActiveState(boolean activeState) {
-        this.activeState = activeState;
-    }
-
     @Override
     public String toString() {
-        return "CustomerDTO{" +
-                "customerId=" + customerId +
-                ", customerName='" + customerName + '\'' +
+        return "CustomerSaveRequestDTO{" +
+                "customerName='" + customerName + '\'' +
                 ", customerAddress='" + customerAddress + '\'' +
                 ", customerSalary=" + customerSalary +
                 ", contactNumbers=" + contactNumbers +
-                ", nic=" + nic +
-                ", activeState=" + activeState +
+                ", nic='" + nic + '\'' +
                 '}';
     }
 }

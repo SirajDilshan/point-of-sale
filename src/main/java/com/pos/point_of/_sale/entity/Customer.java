@@ -1,10 +1,7 @@
 package com.pos.point_of._sale.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -15,7 +12,8 @@ import java.util.ArrayList;
 public class Customer {
 
     @Id
-    @Column(name = "customer_id",length = 45)
+    @Column(name = "customer_id",length = 45 , unique = true)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private int customerId;
 
     @Column(name = "customer_name",length = 100,nullable = false)
@@ -32,17 +30,26 @@ public class Customer {
     private ArrayList<String> contactNumbers;
 
     @Column(name="nic", length = 12, unique = true)
-    private int nic;
+    private String nic;
 
     @Column(name="active_state", columnDefinition = "TINYINT default 1")
     private boolean activeState;
 
-    public Customer(int customerId) {
+    public Customer() {
 
     }
 
-    public Customer(int customerId, String customerName, String customerAddress, double customerSalary, ArrayList<String> contactNumbers, int nic, boolean activeState) {
+    public Customer(int customerId, String customerName, String customerAddress, double customerSalary, ArrayList<String> contactNumbers, String nic, boolean activeState) {
         this.customerId = customerId;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.customerSalary = customerSalary;
+        this.contactNumbers = contactNumbers;
+        this.nic = nic;
+        this.activeState = activeState;
+    }
+
+    public Customer(String customerName, String customerAddress, double customerSalary, ArrayList<String> contactNumbers, String nic, boolean activeState) {
         this.customerName = customerName;
         this.customerAddress = customerAddress;
         this.customerSalary = customerSalary;
@@ -91,11 +98,11 @@ public class Customer {
         this.contactNumbers = contactNumbers;
     }
 
-    public int getNic() {
+    public String getNic() {
         return nic;
     }
 
-    public void setNic(int nic) {
+    public void setNic(String nic) {
         this.nic = nic;
     }
 
