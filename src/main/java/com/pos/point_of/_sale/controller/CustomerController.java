@@ -3,8 +3,10 @@ package com.pos.point_of._sale.controller;
 import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.request.CustomerSaveRequestDTO;
 import com.pos.point_of._sale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.point_of._sale.exception.NotFoundException;
 import com.pos.point_of._sale.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -53,5 +55,11 @@ public class CustomerController {
     public List<CustomerDTO> getAllCustomers(){
         List<CustomerDTO> allCustomers = customerService.getAllCustomers();
         return allCustomers;
+    }
+
+    @DeleteMapping(path = {"/delete-customer/{id}"})
+    public String deleteCustomer(@PathVariable(value = "id") int id) throws NotFoundException {
+        boolean deletedCustomer = customerService.deleteCustomer(id);
+        return "delete";
     }
 }

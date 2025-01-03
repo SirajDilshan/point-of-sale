@@ -4,6 +4,7 @@ import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.request.CustomerSaveRequestDTO;
 import com.pos.point_of._sale.dto.request.CustomerUpdateRequestDTO;
 import com.pos.point_of._sale.entity.Customer;
+import com.pos.point_of._sale.exception.NotFoundException;
 import com.pos.point_of._sale.repository.CustomerRepo;
 import com.pos.point_of._sale.service.CustomerService;
 import org.modelmapper.ModelMapper;
@@ -25,17 +26,21 @@ public class CustomerServiceIMPL implements CustomerService {
 
 
     @Override
+    public boolean deleteCustomer(int id) throws NotFoundException {
+        if (customerRepo.existsById(id)) {
+            customerRepo.deleteById(id);
+        } else {
+            throw new NotFoundException("not found customer for this id");
+        }
+        return true;
+    }
+
+    @Override
     public String addCustomer(CustomerSaveRequestDTO customerSaveRequestDTO) {
 
         Customer customer = new Customer(
 
-                customerSaveRequestDTO.getCustomerName(),
-                customerSaveRequestDTO.getCustomerAddress(),
-                customerSaveRequestDTO.getCustomerSalary(),
-                customerSaveRequestDTO.getContactNumbers(),
-                customerSaveRequestDTO.getNic(),
-                false
-        );
+                customerSaveRequestDTO.getCustomerName(), customerSaveRequestDTO.getCustomerAddress(), customerSaveRequestDTO.getCustomerSalary(), customerSaveRequestDTO.getContactNumbers(), customerSaveRequestDTO.getNic(), false);
         if (!customerRepo.existsById(customer.getCustomerId())) {
             customerRepo.save(customer);
             return customer.getCustomerName() + "saved";
@@ -106,8 +111,8 @@ public class CustomerServiceIMPL implements CustomerService {
 //            customerDTOList.add(customerDTO);
 //
 //        }
-        List<CustomerDTO> customerDTOS = modelMapper
-                .map(getCustomers,new TypeToken<List<CustomerDTO>>(){}.getType());
+        List<CustomerDTO> customerDTOS = modelMapper.map(getCustomers, new TypeToken<List<CustomerDTO>>() {
+        }.getType());
         return customerDTOS;
     }
 }
