@@ -115,4 +115,18 @@ public class CustomerServiceIMPL implements CustomerService {
         }.getType());
         return customerDTOS;
     }
+
+    @Override
+    public List<CustomerDTO> getByName(String customerName) throws NotFoundException {
+        List<Customer> customers = customerRepo.findAllByCustomerNameEquals(customerName);
+        if(customers.size()!= 0){
+            List<CustomerDTO> customerDTOS = modelMapper.map(customers, new TypeToken<List<CustomerDTO>>() {
+            }.getType());
+            return customerDTOS;
+        }else {
+            throw new NotFoundException("not result");
+
+        }
+
+    }
 }
