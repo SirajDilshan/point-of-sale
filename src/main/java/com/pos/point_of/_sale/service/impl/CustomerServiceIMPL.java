@@ -7,6 +7,7 @@ import com.pos.point_of._sale.entity.Customer;
 import com.pos.point_of._sale.exception.NotFoundException;
 import com.pos.point_of._sale.repository.CustomerRepo;
 import com.pos.point_of._sale.service.CustomerService;
+import com.pos.point_of._sale.util.mappers.CustomerMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,8 @@ public class CustomerServiceIMPL implements CustomerService {
     private CustomerRepo customerRepo;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private CustomerMapper customerMapper;
 
 
     @Override
@@ -84,7 +87,8 @@ public class CustomerServiceIMPL implements CustomerService {
 //                    customer.get().isActiveState()
 //            );
 //            return customerDTO;
-            CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
+//            CustomerDTO customerDTO = modelMapper.map(customer.get(), CustomerDTO.class);
+            CustomerDTO customerDTO = customerMapper.entityToDto(customer.get());
             return customerDTO;
 
 
