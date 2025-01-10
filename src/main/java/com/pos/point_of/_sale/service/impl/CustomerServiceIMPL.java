@@ -161,8 +161,15 @@ public class CustomerServiceIMPL implements CustomerService {
     }
 
     @Override
-    public String updateCustomerByQuery(CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO) {
-        return null;
+    public String updateCustomerByQuery(CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO,int id) {
+        if(customerRepo.existsById(id)){
+           customerRepo.updateCustomerQueryById(customerUpdateQueryRequestDTO.getCustomerName(),customerUpdateQueryRequestDTO.getNic(),id);
+            return "update successful id "+ id          ;
+        }else {
+            System.out.println("no Customer found for this id "+ id);
+            return "no Customer found for this id "+ id;
+        }
+
     }
 
 

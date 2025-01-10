@@ -94,8 +94,9 @@ public class CustomerController {
     }
 
     @PutMapping(path = "/update-query/{id}")
-    public String updateCustomerByQuery(@RequestBody CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO){
-        String updated = customerService.updateCustomerByQuery(customerUpdateQueryRequestDTO);
+    public String updateCustomerByQuery(@RequestBody CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO,
+                                        @PathVariable(value = "id") int id){
+        String updated = customerService.updateCustomerByQuery(customerUpdateQueryRequestDTO,id);
         return updated ;
     }
 
