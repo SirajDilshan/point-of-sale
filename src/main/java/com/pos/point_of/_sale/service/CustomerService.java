@@ -2,7 +2,9 @@ package com.pos.point_of._sale.service;
 
 import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.request.CustomerSaveRequestDTO;
+import com.pos.point_of._sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.point_of._sale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.point_of._sale.dto.response.ResponseActiveCustomerDTO;
 import com.pos.point_of._sale.exception.NotFoundException;
 
 import java.util.List;
@@ -21,4 +23,11 @@ public interface CustomerService {
     List<CustomerDTO> getAllCustomers();
 
     List<CustomerDTO> getByName(String customerName) throws NotFoundException;
+
+    List<CustomerDTO> getAllCustomersByActiveState() throws NotFoundException;
+
+
+    List<ResponseActiveCustomerDTO> getAllCustomersByActiveStateOnlyName() throws NotFoundException;
+
+    String updateCustomerByQuery(CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO);
 }

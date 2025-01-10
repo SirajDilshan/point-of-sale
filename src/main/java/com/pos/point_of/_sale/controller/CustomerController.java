@@ -2,11 +2,12 @@ package com.pos.point_of._sale.controller;
 
 import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.request.CustomerSaveRequestDTO;
+import com.pos.point_of._sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.point_of._sale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.point_of._sale.dto.response.ResponseActiveCustomerDTO;
 import com.pos.point_of._sale.exception.NotFoundException;
 import com.pos.point_of._sale.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -72,4 +73,30 @@ public class CustomerController {
         return getCustomer;
 
     }
+
+    @GetMapping(
+            path = {"get-by-active-state"}
+    )
+
+    public List<CustomerDTO> getCustomerByActiveState() throws NotFoundException{
+        List<CustomerDTO> getCustomer = customerService.getAllCustomersByActiveState();
+        return getCustomer;
+    }
+
+
+    @GetMapping(
+            path = {"get-by-active-state-only-name"}
+    )
+
+    public List<ResponseActiveCustomerDTO> getCustomerByActiveStateOnlyName() throws NotFoundException{
+        List<ResponseActiveCustomerDTO> getCustomer = customerService.getAllCustomersByActiveStateOnlyName();
+        return getCustomer;
+    }
+
+    @PutMapping(path = "/update-query/{id}")
+    public String updateCustomerByQuery(@RequestBody CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO){
+        String updated = customerService.updateCustomerByQuery(customerUpdateQueryRequestDTO);
+        return updated ;
+    }
+
 }

@@ -2,7 +2,9 @@ package com.pos.point_of._sale.service.impl;
 
 import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.request.CustomerSaveRequestDTO;
+import com.pos.point_of._sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.point_of._sale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.point_of._sale.dto.response.ResponseActiveCustomerDTO;
 import com.pos.point_of._sale.entity.Customer;
 import com.pos.point_of._sale.exception.NotFoundException;
 import com.pos.point_of._sale.repository.CustomerRepo;
@@ -133,4 +135,35 @@ public class CustomerServiceIMPL implements CustomerService {
         }
 
     }
+
+    @Override
+    public List<CustomerDTO> getAllCustomersByActiveState() throws NotFoundException {
+        List<Customer> customers = customerRepo.findAllByActiveStateEquals(true);
+        if(customers.size() !=0){
+            List<CustomerDTO> customerDTOS = customerMapper.entityListToDtoList(customers);
+            return customerDTOS;
+        }
+        else {
+            throw new NotFoundException("no active customer found");
+        }
+    }
+
+    @Override
+    public List<ResponseActiveCustomerDTO> getAllCustomersByActiveStateOnlyName() throws NotFoundException {
+        List<Customer> customers = customerRepo.findAllByActiveStateEquals(true);
+        if(customers.size() !=0){
+            List<ResponseActiveCustomerDTO> customerDTOS = customerMapper.entityListToDtoListOnlyName(customers);
+            return customerDTOS;
+        }
+        else {
+            throw new NotFoundException("no active customer found");
+        }
+    }
+
+    @Override
+    public String updateCustomerByQuery(CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO) {
+        return null;
+    }
+
+
 }
