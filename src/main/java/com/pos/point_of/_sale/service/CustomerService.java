@@ -38,4 +38,6 @@ public interface CustomerService {
     ResponseCustomerFilterDTO getCustomerByIdByFilter(int id);
 
     String updateCustomerByRequest(CustomerUpdateByDTO customerUpdateByDTO, int id);
+
+    CustomerDTO getCustomerByIdIsActive(int id);
 }

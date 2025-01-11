@@ -25,5 +25,7 @@ public class CustomerDTO {
     private String nic;
     private boolean activeState;
 
-
+    public CustomerDTO(String customerName) {
+        this.customerName = customerName;
+    }
 }

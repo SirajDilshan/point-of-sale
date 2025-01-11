@@ -130,4 +130,13 @@ public class CustomerController {
         return updated ;
     }
 
+    @GetMapping(
+            path = "/get-by-id-is-active",
+            params = "id"
+    )
+    public CustomerDTO getCustomerByIdIsActive(@RequestParam(value = "id") int id){
+        CustomerDTO customerDTO=customerService.getCustomerByIdIsActive(id);
+        return customerDTO;
+    }
+
 }

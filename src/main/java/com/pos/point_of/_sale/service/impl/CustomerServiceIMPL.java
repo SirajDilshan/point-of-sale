@@ -212,12 +212,30 @@ public class CustomerServiceIMPL implements CustomerService {
 
             customer.setNic(customerUpdateByDTO.getNic());
 
-            return customerRepo.save(customer).getCustomerName() + "updated success "+id;
+            return customerRepo.save(customer).getCustomerName() + " updated success "+id;
         } else {
 //            System.out.println("this customer not in database");
 //            return "this customer not in database";
             throw new EntryDuplicationException("Not In Database");
         }
+    }
+
+    @Override
+    public CustomerDTO getCustomerByIdIsActive(int id) {
+        Optional<Customer> customer = customerRepo.findById(id);
+        if (customer.isPresent()) {
+           if(customer.get().isActiveState() == true){
+               CustomerDTO customerDTO = modelMapper.map(customer.get(),CustomerDTO.class);
+               return customerDTO;
+           }else {
+               System.out.println("this is inactive customer");
+           }
+        } else {
+            throw new  NotFoundException("Not Found");
+        }
+        return new CustomerDTO(
+                customer.get().getCustomerName()+" is not active" +id
+        );
     }
 
 
