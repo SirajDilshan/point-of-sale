@@ -172,5 +172,17 @@ public class CustomerServiceIMPL implements CustomerService {
 
     }
 
+    @Override
+    public CustomerDTO getCustomerByNic(String nic) {
+        Optional<Customer> customer = customerRepo.findByNicEquals(nic);
+        if(customer.isPresent()){
+            CustomerDTO customerDTO = modelMapper.map(customer.get(),CustomerDTO.class);
+            return customerDTO;
+        }else {
+            return null;
+        }
+
+    }
+
 
 }

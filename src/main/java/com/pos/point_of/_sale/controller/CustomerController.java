@@ -100,4 +100,16 @@ public class CustomerController {
         return updated ;
     }
 
+
+    
+
+    @GetMapping(
+            path = {"get-by-nic"},
+            params = "nic"
+    )
+    public CustomerDTO getCustomerByNic(@RequestParam(value = "nic") String nic){
+        CustomerDTO customerDTO=customerService.getCustomerByNic(nic);
+        return customerDTO;
+    }
+
 }

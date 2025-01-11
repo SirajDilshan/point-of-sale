@@ -30,4 +30,6 @@ public interface CustomerService {
     List<ResponseActiveCustomerDTO> getAllCustomersByActiveStateOnlyName() throws NotFoundException;
 
     String updateCustomerByQuery(CustomerUpdateQueryRequestDTO customerUpdateQueryRequestDTO,int id);
+
+    CustomerDTO getCustomerByNic(String nic);
 }
