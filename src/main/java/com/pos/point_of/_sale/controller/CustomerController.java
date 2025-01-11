@@ -4,7 +4,9 @@ import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.request.CustomerSaveRequestDTO;
 import com.pos.point_of._sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.point_of._sale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.point_of._sale.dto.response.CustomerUpdateByDTO;
 import com.pos.point_of._sale.dto.response.ResponseActiveCustomerDTO;
+import com.pos.point_of._sale.dto.response.ResponseCustomerFilterDTO;
 import com.pos.point_of._sale.exception.NotFoundException;
 import com.pos.point_of._sale.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +103,7 @@ public class CustomerController {
     }
 
 
-    
+
 
     @GetMapping(
             path = {"get-by-nic"},
@@ -110,6 +112,22 @@ public class CustomerController {
     public CustomerDTO getCustomerByNic(@RequestParam(value = "nic") String nic){
         CustomerDTO customerDTO=customerService.getCustomerByNic(nic);
         return customerDTO;
+    }
+
+    @GetMapping(
+            path = {"get-by-id-filter"},
+            params = "id"
+    )
+    public ResponseCustomerFilterDTO getCustomerByIdFilter(@RequestParam(value = "id") int id){
+        ResponseCustomerFilterDTO responseCustomerFilterDTO=customerService.getCustomerByIdByFilter(id);
+        return responseCustomerFilterDTO;
+    }
+
+
+    @PutMapping(path = "/update-by-request/{id}")
+    public String updateCustomerByRequest(@RequestBody CustomerUpdateByDTO customerUpdateByDTO,@PathVariable(value = "id") int id){
+        String updated = customerService.updateCustomerByRequest(customerUpdateByDTO,id);
+        return updated ;
     }
 
 }

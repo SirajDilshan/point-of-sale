@@ -4,8 +4,11 @@ import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.request.CustomerSaveRequestDTO;
 import com.pos.point_of._sale.dto.request.CustomerUpdateQueryRequestDTO;
 import com.pos.point_of._sale.dto.request.CustomerUpdateRequestDTO;
+import com.pos.point_of._sale.dto.response.CustomerUpdateByDTO;
 import com.pos.point_of._sale.dto.response.ResponseActiveCustomerDTO;
+import com.pos.point_of._sale.dto.response.ResponseCustomerFilterDTO;
 import com.pos.point_of._sale.entity.Customer;
+import com.pos.point_of._sale.exception.EntryDuplicationException;
 import com.pos.point_of._sale.exception.NotFoundException;
 import com.pos.point_of._sale.repository.CustomerRepo;
 import com.pos.point_of._sale.service.CustomerService;
@@ -69,8 +72,9 @@ public class CustomerServiceIMPL implements CustomerService {
             customer.setActiveState(customerUpdateRequestDTO.isActiveState());
             return customerRepo.save(customer).getCustomerName() + "updated";
         } else {
-            System.out.println("this customer not in database");
-            return "this customer not in database";
+//            System.out.println("this customer not in database");
+//            return "this customer not in database";
+            throw new EntryDuplicationException("Not In Database");
         }
 
     }
@@ -179,9 +183,41 @@ public class CustomerServiceIMPL implements CustomerService {
             CustomerDTO customerDTO = modelMapper.map(customer.get(),CustomerDTO.class);
             return customerDTO;
         }else {
-            return null;
+            throw new  NotFoundException("not found");
         }
 
+    }
+
+    @Override
+    public ResponseCustomerFilterDTO getCustomerByIdByFilter(int id) {
+        Optional<Customer> customer = customerRepo.findById(id);
+        if (customer.isPresent()) {
+
+            ResponseCustomerFilterDTO responseCustomerFilterDTO = customerMapper.entityToResponseDto(customer.get());
+            return responseCustomerFilterDTO;
+
+
+        } else {
+            throw new  NotFoundException("Not Found");
+        }
+    }
+
+    @Override
+    public String updateCustomerByRequest(CustomerUpdateByDTO customerUpdateByDTO, int id) {
+        if (customerRepo.existsById(id)) {
+            Customer customer = customerRepo.getReferenceById(id);
+            customer.setCustomerName(customerUpdateByDTO.getCustomerName());
+
+            customer.setCustomerSalary(customerUpdateByDTO.getCustomerSalary());
+
+            customer.setNic(customerUpdateByDTO.getNic());
+
+            return customerRepo.save(customer).getCustomerName() + "updated success "+id;
+        } else {
+//            System.out.println("this customer not in database");
+//            return "this customer not in database";
+            throw new EntryDuplicationException("Not In Database");
+        }
     }
 
 

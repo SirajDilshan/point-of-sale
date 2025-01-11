@@ -7,12 +7,13 @@ import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class ResponseActiveCustomerDTO {
+public class CustomerUpdateByDTO {
     private String customerName;
-    private ArrayList<String> contactNumbers;
+    private double customerSalary;
+    private String nic;
 }
