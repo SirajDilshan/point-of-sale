@@ -2,6 +2,7 @@ package com.pos.point_of._sale.util.mappers;
 
 import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.response.ResponseActiveCustomerDTO;
+import com.pos.point_of._sale.dto.response.ResponseCustomerFilterDTO;
 import com.pos.point_of._sale.entity.Customer;
 import org.mapstruct.Mapper;
 
@@ -18,9 +19,5 @@ public interface CustomerMapper {
     List<ResponseActiveCustomerDTO> entityListToDtoListOnlyName(List<Customer> customers);
 
 
-
-
-
-
-
+    ResponseCustomerFilterDTO entityToResponseDto(Customer customer);
 }
