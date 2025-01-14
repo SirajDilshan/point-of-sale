@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
+
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -22,4 +22,6 @@ public class ItemDTO {
     private double balanceQty;
     private double supplierPrice;
     private double sellingPrice;
+    private boolean activeState;
+
 }

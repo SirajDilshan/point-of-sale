@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcTypeCode;
+import org.hibernate.type.SqlTypes;
 
 @Entity
 @Table(name = "item")
@@ -32,4 +34,7 @@ public class Item {
 
     @Column(name = "selling_price",length = 100,nullable = false)
     private double sellingPrice;
+
+    @Column(name="active_state", columnDefinition = "TINYINT default 1")
+    private boolean activeState;
 }
