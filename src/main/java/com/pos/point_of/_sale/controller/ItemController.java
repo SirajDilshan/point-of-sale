@@ -1,11 +1,11 @@
 package com.pos.point_of._sale.controller;
 
-import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.ItemDTO;
-import com.pos.point_of._sale.dto.request.CustomerSaveRequestDTO;
+import com.pos.point_of._sale.dto.peginated.PaginatedResponseItemDTO;
 import com.pos.point_of._sale.dto.request.ItemSaveRequestDTO;
 import com.pos.point_of._sale.service.ItemService;
 import com.pos.point_of._sale.util.StandardResponse;
+import jakarta.validation.constraints.Max;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,7 +65,7 @@ public class ItemController {
 
     }
 
-@GetMapping(path = "get-all-item-count")
+@GetMapping(path = "count-all-item")
     public ResponseEntity<StandardResponse>getAllItemCounts(){
 int itemCount = itemService.countALLItems();
         return new ResponseEntity<StandardResponse>(
@@ -73,4 +73,19 @@ int itemCount = itemService.countALLItems();
                 HttpStatus.OK
         );
     }
+
+@GetMapping(
+        path = "get-all-items-paginated",
+        params = {"page","size"}
+)
+public ResponseEntity<StandardResponse>getAllItemsPaginated(
+        @RequestParam(value = "page") int page,
+        @RequestParam(value = "size") @Max(50) int size
+){
+    PaginatedResponseItemDTO paginatedResponseItemDTO = itemService.getAllItemPaginated(page,size);
+    return new ResponseEntity<StandardResponse>(
+            new StandardResponse(200,  " success" , paginatedResponseItemDTO),
+            HttpStatus.OK
+    );
+}
 }
