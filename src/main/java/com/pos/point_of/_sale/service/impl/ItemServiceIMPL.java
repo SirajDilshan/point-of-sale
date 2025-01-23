@@ -1,9 +1,8 @@
 package com.pos.point_of._sale.service.impl;
 
-import com.pos.point_of._sale.dto.CustomerDTO;
 import com.pos.point_of._sale.dto.ItemDTO;
+import com.pos.point_of._sale.dto.peginated.PaginatedResponseItemDTO;
 import com.pos.point_of._sale.dto.request.ItemSaveRequestDTO;
-import com.pos.point_of._sale.entity.Customer;
 import com.pos.point_of._sale.entity.Item;
 import com.pos.point_of._sale.exception.EntryDuplicationException;
 import com.pos.point_of._sale.repository.ItemRepo;
@@ -12,11 +11,12 @@ import com.pos.point_of._sale.util.mappers.ItemMapper;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ItemServiceIMPL implements ItemService {
@@ -67,4 +67,16 @@ public class ItemServiceIMPL implements ItemService {
         int count = itemRepo.countAllByActiveStateEquals(true);
         return count;
     }
+
+    @Override
+    public PaginatedResponseItemDTO getAllItemPaginated(int page, int size) {
+        Page<Item> getAllItemsByPaginated = itemRepo.findAll(PageRequest.of(page, size));
+
+        return new PaginatedResponseItemDTO(
+                itemMapper.pageToList(getAllItemsByPaginated),
+                10
+        );
+    }
+
+
 }
