@@ -74,7 +74,8 @@ public class ItemServiceIMPL implements ItemService {
 
         return new PaginatedResponseItemDTO(
                 itemMapper.pageToList(getAllItemsByPaginated),
-                10
+                itemRepo.count()
+
         );
     }
 

@@ -13,4 +13,6 @@ import java.util.List;
 public class PaginatedResponseItemDTO {
     private List<ItemDTO> list;
     private long dataCount;
+
+
 }
