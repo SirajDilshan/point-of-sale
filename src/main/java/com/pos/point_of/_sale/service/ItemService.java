@@ -19,4 +19,6 @@ public interface ItemService {
 
 
     PaginatedResponseItemDTO getAllItemPaginated(int page, int size);
+
+    PaginatedResponseItemDTO getAllActiveItemPaginated(int page, int size, boolean activeState);
 }

@@ -88,4 +88,20 @@ public ResponseEntity<StandardResponse>getAllItemsPaginated(
             HttpStatus.OK
     );
 }
+
+    @GetMapping(
+            path = "get-all-active-items-paginated",
+            params = {"page","size","activeState"}
+    )
+    public ResponseEntity<StandardResponse>getAllActiveItemsPaginated(
+            @RequestParam(value = "page") int page,
+            @RequestParam(value = "size") @Max(50) int size,
+            @RequestParam(value = "activeState") boolean activeState
+    ){
+        PaginatedResponseItemDTO paginatedResponseItemDTO = itemService.getAllActiveItemPaginated(page,size,activeState);
+        return new ResponseEntity<StandardResponse>(
+                new StandardResponse(200,  " success" , paginatedResponseItemDTO),
+                HttpStatus.OK
+        );
+    }
 }
