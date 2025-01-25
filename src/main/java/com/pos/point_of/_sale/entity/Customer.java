@@ -6,6 +6,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -34,6 +35,9 @@ public class Customer {
 
     @Column(name="active_state", columnDefinition = "TINYINT default 1")
     private boolean activeState;
+
+    @OneToMany(mappedBy="customer")
+    private Set<Order> orders;
 
     public Customer() {
 

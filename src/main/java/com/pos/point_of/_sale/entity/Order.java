@@ -16,4 +16,8 @@ public class Order {
     @Column(name = "order_id",length = 45 , unique = true)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int orderId;
+
+    @ManyToOne
+    @JoinColumn(name="customer_id", nullable=false)
+    private Customer customer;
 }
