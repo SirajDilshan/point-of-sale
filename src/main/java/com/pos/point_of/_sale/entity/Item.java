@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "item")
 @AllArgsConstructor
@@ -15,7 +17,7 @@ import org.hibernate.type.SqlTypes;
 @Data
 public class Item {
     @Id
-    @Column(name = "item_id",length = 45 , unique = true)
+    @Column(name = "item_id", length = 45, unique = true)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int itemId;
 
@@ -37,4 +39,7 @@ public class Item {
 
     @Column(name="active_state", columnDefinition = "TINYINT default 1")
     private boolean activeState;
+
+    @OneToMany(mappedBy="items")
+    private Set<OrderDetails> orderDetails;
 }
