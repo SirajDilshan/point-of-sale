@@ -32,4 +32,10 @@ public class Order {
 
     @OneToMany(mappedBy="orders")
     private Set<OrderDetails> orderDetails;
+
+    public Order(Customer customer, Date date, Double total) {
+        this.customer = customer;
+        this.date = date;
+        this.total = total;
+    }
 }
