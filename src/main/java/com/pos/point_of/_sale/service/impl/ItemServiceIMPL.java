@@ -43,15 +43,11 @@ public class ItemServiceIMPL implements ItemService {
 
     }
 
-    @Override
     public List<ItemDTO> getAllItem() {
-        List<Item> getItems = itemRepo.findAll();
-        List<ItemDTO> itemDTOList = new ArrayList<>();
-
-
-        List<ItemDTO> itemDTOS = modelMapper.map(getItems, new TypeToken<List<ItemDTO>>() {
-        }.getType());
-        return itemDTOS;
+        List<Item> items = itemRepo.findAll();
+        return items.stream()
+                .map(itemMapper::EntityToDto)
+                .toList();
     }
 
     @Override
@@ -70,12 +66,10 @@ public class ItemServiceIMPL implements ItemService {
 
     @Override
     public PaginatedResponseItemDTO getAllItemPaginated(int page, int size) {
-        Page<Item> getAllItemsByPaginated = itemRepo.findAll(PageRequest.of(page, size));
-
+        Page<Item> itemPage = itemRepo.findAll(PageRequest.of(page, size));
         return new PaginatedResponseItemDTO(
-                itemMapper.pageToList(getAllItemsByPaginated),
+                itemMapper.pageToList(itemPage),  // Uses the new mapper
                 itemRepo.count()
-
         );
     }
 
